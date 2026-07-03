@@ -4,10 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import SteelSection from './components/SteelSection';
 import ConcreteBlocksSection from './components/ConcreteBlocksSection';
-import LogisticsSection from './components/LogisticsSection';
 import ProductsSection from './components/ProductsSection';
 import FeaturesSection from './components/FeaturesSection';
 import StatisticsSection from './components/StatisticsSection';
@@ -64,10 +61,7 @@ function App() {
       {/* Main content */}
       <Navbar />
       <main>
-        <Hero />
-        <SteelSection />
         <ConcreteBlocksSection />
-        <LogisticsSection />
         <ProductsSection />
         <FeaturesSection />
         <StatisticsSection />

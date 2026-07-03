@@ -20,7 +20,13 @@ function preloadImages(urls: string[]): Promise<HTMLImageElement[]> {
         new Promise<HTMLImageElement>((resolve) => {
           const image = new Image();
           image.decoding = 'async';
-          image.onload = () => resolve(image);
+          image.onload = () => {
+            if (typeof image.decode === 'function') {
+              image.decode().then(() => resolve(image)).catch(() => resolve(image));
+            } else {
+              resolve(image);
+            }
+          };
           image.onerror = () => resolve(image);
           image.src = url;
         }),
@@ -33,6 +39,22 @@ function getScrollDistance(frameCount: number, multiplier?: number): number {
   return window.innerHeight * baseMultiplier;
 }
 
+function applyContainerAspectRatio(
+  container: HTMLElement,
+  image: HTMLImageElement,
+): void {
+  if (!image.naturalWidth || !image.naturalHeight) return;
+  container.style.aspectRatio = `${image.naturalWidth} / ${image.naturalHeight}`;
+}
+
+function getDisplaySize(container: HTMLElement): { width: number; height: number } {
+  const rect = container.getBoundingClientRect();
+  return {
+    width: Math.max(1, Math.round(rect.width)),
+    height: Math.max(1, Math.round(rect.height)),
+  };
+}
+
 function setupCanvas(
   canvas: HTMLCanvasElement,
   container: HTMLElement,
@@ -41,13 +63,13 @@ function setupCanvas(
   if (!context) return null;
 
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const width = container.clientWidth;
-  const height = container.clientHeight;
+  const { width, height } = getDisplaySize(container);
 
   canvas.width = Math.max(1, Math.floor(width * dpr));
   canvas.height = Math.max(1, Math.floor(height * dpr));
-  canvas.style.width = `${width}px`;
-  canvas.style.height = `${height}px`;
+  canvas.style.maxWidth = '100%';
+  canvas.style.width = '100%';
+  canvas.style.height = 'auto';
 
   context.setTransform(dpr, 0, 0, dpr, 0, 0);
   context.imageSmoothingEnabled = true;
@@ -104,12 +126,14 @@ export function initScrollFrameAnimation({
   let currentFrame = 0;
   let frames: HTMLImageElement[] = [];
   let context: CanvasRenderingContext2D | null = null;
+  let resizeObserver: ResizeObserver | null = null;
 
   const renderFrame = (index: number) => {
     if (!context || !frames[index]) return;
 
     currentFrame = index;
-    drawFrame(context, frames[index], canvasContainer.clientWidth, canvasContainer.clientHeight);
+    const { width, height } = getDisplaySize(canvasContainer);
+    drawFrame(context, frames[index], width, height);
   };
 
   const handleResize = () => {
@@ -122,10 +146,16 @@ export function initScrollFrameAnimation({
 
   window.addEventListener('resize', handleResize);
 
+  if (typeof ResizeObserver !== 'undefined') {
+    resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(canvasContainer);
+  }
+
   preloadImages(frameUrls).then((loadedFrames) => {
     if (cancelled) return;
 
     frames = loadedFrames;
+    applyContainerAspectRatio(canvasContainer, frames[0]);
     context = setupCanvas(canvas, canvasContainer);
     renderFrame(0);
 
@@ -165,6 +195,7 @@ export function initScrollFrameAnimation({
   return () => {
     cancelled = true;
     window.removeEventListener('resize', handleResize);
+    resizeObserver?.disconnect();
     scrollTrigger?.kill();
     ScrollTrigger.getAll().forEach((trigger) => {
       if (trigger.trigger === section) {

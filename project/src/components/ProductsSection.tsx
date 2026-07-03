@@ -4,8 +4,8 @@ import { Blocks, BrickWall, BarChart3, Circle, Cylinder, Mountain, ArrowRight } 
 const products = [
   {
     icon: Blocks,
-    title: 'Concrete Blocks',
-    description: 'High-strength concrete blocks for all construction needs. Various sizes and grades available.',
+    title: 'Blloka Betoni',
+    description: 'Blloka betoni me rezistencë të lartë për çdo nevojë ndërtimi. Të disponueshme në madhësi dhe cilësi të ndryshme.',
     color: 'from-gray-500 to-gray-600',
   },
   {
@@ -18,7 +18,7 @@ const products = [
     icon: BarChart3,
     title: 'Reinforcement Steel',
     description: 'Premium fertraj steel bars meeting international quality standards.',
-    color: 'from-zinc-400 to-zinc-500',
+    color: 'from-orange-400 to-orange-500',
   },
   {
     icon: Circle,

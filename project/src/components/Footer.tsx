@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { HardHat, Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Youtube, ArrowUp, Heart } from 'lucide-react';
 
 const quickLinks = [
-  { name: 'Ballina', href: '#hero' },
+  { name: 'Ballina', href: '#concrete-blocks' },
   { name: 'Produktet', href: '#products' },
   { name: 'Per ne', href: '#why-us' },
   { name: 'Galleria', href: '#gallery' },
@@ -51,7 +51,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <motion.a
-              href="#hero"
+              href="#concrete-blocks"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToTop();
@@ -65,7 +65,7 @@ export default function Footer() {
               <span className="text-2xl font-display font-bold gradient-text">Arberia</span>
             </motion.a>
             <p className="text-gray-400 leading-relaxed mb-6">
-              Ne ofrojmë materiale ndërtimore me cilësi të lartë, të testuara për qëndrueshmëri dhe siguri.
+              Ne ofrojmë materiale ndërtimore me cilësi të lartë.
               Me përvojë mbi dy dekada, garantojmë transport të shpejtë dhe të sigurt në çdo qytet të Kosovës.         
             </p>
             <div className="flex gap-3">

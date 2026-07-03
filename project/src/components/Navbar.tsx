@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone } from 'lucide-react';
 
 const navLinks = [
-  { name: 'Ballina', href: '#hero' },
+  { name: 'Ballina', href: '#concrete-blocks' },
   { name: 'Produktet', href: '#products' },
   { name: 'Per Ne', href: '#why-us' },
   { name: 'Galleria', href: '#gallery' },
@@ -43,10 +43,10 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.a
-            href="#hero"
+            href="#concrete-blocks"
             onClick={(e) => {
               e.preventDefault();
-              scrollTo('#hero');
+              scrollTo('#concrete-blocks');
             }}
             className="flex items-center gap-3"
             whileHover={{ scale: 1.02 }}
