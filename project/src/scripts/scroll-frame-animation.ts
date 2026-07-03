@@ -69,7 +69,7 @@ function setupCanvas(
   canvas.height = Math.max(1, Math.floor(height * dpr));
   canvas.style.maxWidth = '100%';
   canvas.style.width = '100%';
-  canvas.style.height = 'auto';
+  canvas.style.height = '100%';
 
   context.setTransform(dpr, 0, 0, dpr, 0, 0);
   context.imageSmoothingEnabled = true;
@@ -96,11 +96,11 @@ function drawFrame(
   let drawHeight: number;
 
   if (imageRatio > canvasRatio) {
-    drawWidth = width;
-    drawHeight = width / imageRatio;
-  } else {
     drawHeight = height;
     drawWidth = height * imageRatio;
+  } else {
+    drawWidth = width;
+    drawHeight = width / imageRatio;
   }
 
   const offsetX = (width - drawWidth) / 2;

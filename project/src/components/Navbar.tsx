@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone } from 'lucide-react';
 
@@ -12,15 +12,6 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const scrollTo = (href: string) => {
     const element = document.querySelector(href);
@@ -35,12 +26,10 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'glass-dark py-4' : 'bg-transparent py-6'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-transparent py-6 pointer-events-none"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 pointer-events-auto">
+        <div className="flex items-center justify-between drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
           {/* Logo */}
           <motion.a
             href="#concrete-blocks"
@@ -122,7 +111,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden glass-dark mt-4 mx-6 rounded-2xl overflow-hidden"
+            className="md:hidden mt-4 mx-6 rounded-2xl overflow-hidden pointer-events-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]"
           >
             <div className="px-6 py-4 space-y-4">
               {navLinks.map((link) => (

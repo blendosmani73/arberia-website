@@ -9,7 +9,6 @@ import ProductsSection from './components/ProductsSection';
 import FeaturesSection from './components/FeaturesSection';
 import StatisticsSection from './components/StatisticsSection';
 import GallerySection from './components/GallerySection';
-import TestimonialsSection from './components/TestimonialsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 
@@ -66,7 +65,6 @@ function App() {
         <FeaturesSection />
         <StatisticsSection />
         <GallerySection />
-        <TestimonialsSection />
         <ContactSection />
       </main>
       <Footer />
